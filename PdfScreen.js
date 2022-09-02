@@ -16,15 +16,19 @@ export default function PdfScreen() {
   }, [navigation]);
 
   return (
-    <View style={{flex: 1, backgroundColor: 'red'}}>
+    <View style={{flex: 1}}>
       <PSPDFKitView
+        style={{flex: 1, color: '#267ad4'}}
         ref={ref}
         configuration={{
-          thumbnailBarMode: 'scrollable',
           pageTransition: 'scrollContinuous',
-          scrollDirection: 'vertical',
+          pageScrollDirection: 'vertical',
+          documentLabelEnabled: true,
+          pageMode: 'single',
+          showPageNumberOverlay: true,
+          fitPageToWidth: true,
         }}
-        style={{flex: 1, backgroundColor: 'blue'}}
+        fragmentTag="test"
         document="file:///android_asset/plan.pdf"
       />
     </View>

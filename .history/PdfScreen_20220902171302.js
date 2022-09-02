@@ -1,5 +1,5 @@
 import React, {useRef} from 'react';
-import PSPDFKitView from 'react-native-pspdfkit';
+import PSPDFKitView from '@archireport/react-native-pspdfkit';
 import {View} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 
@@ -10,27 +10,25 @@ export default function PdfScreen() {
 
   React.useEffect(() => {
     const unsubscribe = navigation.addListener('beforeRemove', async () => {
-      if (shop?.id) {
-        if (ref.current?.theme) {
-          await shopsCollection
-            .doc(shop?.id)
-            .update({theme: ref.current?.theme});
-        }
-      }
+      ref.current?.destroyView();
     });
     return unsubscribe;
-  }, [navigation, shop?.id]);
+  }, [navigation]);
 
   return (
-    <View style={{flex: 1, backgroundColor: 'red'}}>
+    <View style={{flex: 1}}>
       <PSPDFKitView
+        style={{flex: 1, color: '#267ad4'}}
         ref={ref}
         configuration={{
-          thumbnailBarMode: 'scrollable',
           pageTransition: 'scrollContinuous',
-          scrollDirection: 'vertical',
+          pageScrollDirection: 'vertical',
+          documentLabelEnabled: true,
+          pageMode: 'single',
+          showPageNumberOverlay: true,
+          fitPageToWidth: true,
         }}
-        style={{flex: 1, backgroundColor: 'blue'}}
+        fragmentTag="test"
         document="file:///android_asset/plan.pdf"
       />
     </View>
